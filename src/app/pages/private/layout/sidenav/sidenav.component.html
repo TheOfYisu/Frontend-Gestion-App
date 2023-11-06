@@ -1,0 +1,142 @@
+<div class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" routerLink="/manager/dashboard">
+        <i class="bi bi-clipboard-data-fill"></i><span>Dashboard</span>
+      </a>
+    </li>
+    <!-- Administrador -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#admin-nav"
+        data-bs-toggle="collapse"
+      >
+        <i class="bi bi-people-fill"></i><span>Administrador</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="admin-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/manager/admin/all">
+            <i class="bi bi-circle"></i><span>Usuarios</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/manager/admin/listable">
+            <i class="bi bi-circle"></i><span>Tablas</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Administrador -->
+
+    <!-- Personal -->
+    <!-- <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#personal-nav"
+        data-bs-toggle="collapse"
+      >
+        <i class="bi bi-people-fill"></i><span>Personal</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="personal-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/manager/staff/all">
+            <i class="bi bi-circle"></i><span>Todos</span>
+          </a>
+        </li>
+      </ul>
+    </li> -->
+    <!-- End Personal -->
+
+    <!-- Horario -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#horario-nav"
+        data-bs-toggle="collapse"
+      >
+        <i class="bi bi-calendar-date"></i><span>Schedules</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="horario-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/manager/schedule/program">
+            <i class="bi bi-circle"></i><span>Horario</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/manager/schedule/calendar">
+            <i class="bi bi-circle"></i><span>Calendario</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#solicitudes-nav"
+        data-bs-toggle="collapse"
+      >
+        <i class="bi bi-clipboard2-plus-fill"></i><span>Solicitudes</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="solicitudes-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/user/report/assistance">
+            <i class="bi bi-circle"></i><span>Permisos</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/user/report/assistance">
+            <i class="bi bi-circle"></i><span>Cambio de horario</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#report-nav"
+        data-bs-toggle="collapse"
+      >
+        <i class="bi bi-journal-text"></i><span>Reportes</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="report-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a routerLink="/manager/reports/attendance">
+            <i class="bi bi-circle"></i><span>Asistencia</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/manager/reports/productivity">
+            <i class="bi bi-circle"></i><span>Productividad</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Horario -->
+  </ul>
+</div>

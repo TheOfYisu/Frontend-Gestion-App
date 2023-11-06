@@ -1,0 +1,68 @@
+.header-conter {
+    .select {
+        margin-right: 5%;
+
+        .form-select {
+            margin-left: 3%;
+            width: auto;
+        }
+    }
+
+    margin: 0 2%;
+}
+
+.table-schedule {
+    margin-top: 3%;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        table-layout: fixed;
+        /* Añade esta propiedad */
+    }
+
+    table th,
+    table td {
+        padding: 10px;
+        text-align: center;
+        width: calc(100% / 7);
+        /* Ancho igual para todas las celdas */
+        height: 80px;
+    }
+
+    table thead th {
+        background-color: #012970;
+        color: #ffffff;
+    }
+
+    table tbody td {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        cursor: pointer;
+    }
+
+    table tbody td:hover {
+        background-color: #f0f0f0;
+    }
+
+    .selected {
+        background-color: #012970;
+        color: #fff;
+        font-weight: bold;
+        margin: 0 30%;
+        border-radius: 10px;
+    }
+
+    .empty-cell {
+        color: transparent;
+    }
+
+    .event-indicator {
+        margin-top: 2%;
+        width: 100%;
+        background-color: #ff0000;
+        border-radius: 10px;
+        color: #ffffff;
+    }
+}

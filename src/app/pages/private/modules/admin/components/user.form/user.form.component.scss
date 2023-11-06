@@ -1,0 +1,27 @@
+.modal-body {
+    .form-group {
+        margin: 1% 0 1% 0%;
+    }
+
+    margin: 3% 2%;
+}
+
+.has-error input,
+.has-error select {
+    border-color: red;
+}
+
+.has-correct input,
+.has-correct select {
+    border-color: green;
+}
+
+.invalid-feedback {
+    display: block;
+    color: red;
+}
+
+.required-field {
+    color: red;
+    margin-left: 5px;
+}

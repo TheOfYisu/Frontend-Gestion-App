@@ -1,0 +1,14 @@
+Dependencias y librerias
+npm i bootstrap@5.3.2
+npm i bootstrap-icons
+npm i @popperjs/core
+npm install sweetalert2
+ng add @ng-bootstrap/ng-bootstrap
+npm install --save ag-grid-community
+npm install --save ag-grid-angular
+
+Ejecutar entorno de produccion
+ng serve --configuration=production
+
+Ejecutar entorno de desarrollo
+ng serve --configuration=development

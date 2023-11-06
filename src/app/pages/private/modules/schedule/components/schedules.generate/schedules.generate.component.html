@@ -1,0 +1,183 @@
+<div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 85vh;">
+    <div class="spinner-container">
+        <div class="spinner"></div>
+        <p class="loading-text">Cargando...</p>
+    </div>
+</div>
+<div *ngIf="!isLoading" class="container-generate">
+    <div class="d-flex justify-content-between header-container">
+        <div class="mb-3" style="flex: 1;">
+            <h2>Creación de Horarios</h2>
+        </div>
+        <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-danger" style="margin-right: 3%; white-space: nowrap;"
+                (click)="cancel_shedules()">
+                <i class=" bi bi-back" style="margin-right: 10px;"></i>Cancelar
+            </button>
+            <button type="button" class="btn btn-success" style="white-space: nowrap;" (click)="save_shedules()"
+                [disabled]="!valid_form">
+                <i class=" bi bi-save-fill" style="margin-right: 10px;"></i>Guardar
+            </button>
+        </div>
+    </div>
+    <form [formGroup]="generate_shedules">
+        <div class="row centered-row">
+            <div class="form-group col-lg-3 col-6">
+                <label class="form-label" for="personalSelect">Seleccionar personal:</label>
+                <select class="form-select" formControlName="select_personal">
+                    <option value="">Seleccionar</option>
+                    <option value="all">Todo el personal</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-3 col-6">
+                <label class="form-label" for="personalSelect">Dias a la semana:</label>
+                <select class="form-select" formControlName="select_day" (change)="change_day_brake($event)">
+                    <option value="">Seleccionar</option>
+                    <option value="l_to_v">Lunes a Viernes</option>
+                    <option value="l_to_s">Lunes a Sabado</option>
+                    <!-- <option value="l_to_d">Lunes a Domingo</option> -->
+                </select>
+            </div>
+            <div class="form-group col- date-picker-container col-lg-3 col-12">
+                <label class="form-label" for="personalSelect">Rango de dias horario:</label>
+                <div class="dp-hidden position-absolute">
+                    <div class="input-group">
+                        <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="1"
+                            [dayTemplate]="dateTemplate" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1" />
+                        <ng-template #dateTemplate let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input #dpDateRange class="form-control" placeholder="yyyy-mm-dd - yyyy-mm-dd" name="dpDateRange"
+                        [value]="formatter.format(fromDate) + '  /  ' + formatter.format(toDate)"
+                        (click)="datepicker.toggle()" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="datepicker.toggle()"
+                        type="button"></button>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3 col-6 custom-form-group">
+                <div class="form-check form-switch" title="Mensaje emergente al poner el mouse encima">
+                    <input class="form-check-input" type="checkbox" role="switch" formControlName="turno_exact">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Turnos exactos</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="hour-operation row justify-content-between container-form d-flex align-items-center">
+            <div class="form-group col-12 col-lg-4 col-md-4 custom-form-group">
+                <span>Rango de operacion</span>
+                <div class="container-rango">
+                    <div class="hour1">
+                        <label class="form-label" for="timeSelect">Inicio:</label>
+                        <input type="time" class="form-control" formControlName="range_init_operation"
+                            (change)="onRangeFinishOperationChange()" />
+                    </div>
+                    <div class="hour2">
+                        <label class="form-label" for="timeSelect">Final:</label>
+                        <input type="time" class="form-control" formControlName="range_finish_operation"
+                            (change)="onRangeFinishOperationChange()" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3 col-12 dropdown">
+                <label class="form-label">Dias de descanso</label>
+                <button class="form-control dropdown-toggle text-start" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" data-bs-auto-close="true" aria-haspopup="true"
+                    aria-expanded="false">Mostrar
+                    opciones</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div *ngFor="let day of days; let i = index" class="form-check">
+                        <input class="form-check-input" type="checkbox" [value]="i" [checked]="selectedDays[i]"
+                            [disabled]="isCheckboxDisabled(i)">
+                        <label class="form-check-label">{{ day }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-lg-3 col-3">
+                <label class="form-label" for="personalSelect">Numero de turnos:</label>
+                <select class="form-select" formControlName="select_turnos">
+                    <option value="">Seleccionar</option>
+                    <option value=1>1 Turno</option>
+                    <option value=2>2 Turnos</option>
+                    <option value=3>3 Turnos</option>
+                    <option value=4>4 Turnos</option>
+                </select>
+            </div>
+            <div class="form-group col-12 col-lg-2 col-md-2">
+                <label class="form-label">Horas del turno</label>
+                <input type="number" class="form-control form-control-md" formControlName="hour_turno">
+                <div class="invalid-feedback">
+                    Las horas semanales son requeridas.
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row container-time justify-content-center">
+            <div class="form-group col-12 col-lg-4 col-md-4 custom-form-group">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" formControlName="check_brake_1"
+                        (click)="check('check_brake_1')">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Añadir Descanso 1</label>
+                </div>
+                <span>Rango de horas</span>
+                <div class="container-rango">
+                    <div class="hour1">
+                        <label class="form-label" for="timeSelect">Inicio:</label>
+                        <input type="time" class="form-control" formControlName="start_brake_1" />
+                    </div>
+                    <div class="hour2">
+                        <label class="form-label" for="timeSelect">Final:</label>
+                        <input type="time" class="form-control" formControlName="finish_brake_1" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-4 col-md-4 custom-form-group">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" formControlName="check_lunch"
+                        (click)="check('check_lunch')">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Añadir Almuerzos</label>
+                </div>
+                <span>Rango de horas</span>
+                <div class="container-rango">
+                    <div class="hour1">
+                        <label class="form-label" for="timeSelect">Inicio:</label>
+                        <input type="time" class="form-control" formControlName="start_lunch" />
+                    </div>
+                    <div class="hour2">
+                        <label class="form-label" for="timeSelect">Final:</label>
+                        <input type="time" class="form-control" formControlName="finish_lunch" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-4 col-md-4 custom-form-group">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" formControlName="check_brake_2"
+                        (click)="check('check_brake_2')">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Añadir Descanso 2</label>
+                </div>
+                <span>Rango de horas</span>
+                <div class="container-rango">
+                    <div class="hour1">
+                        <label class="form-label" for="timeSelect">Inicio:</label>
+                        <input type="time" class="form-control" formControlName="start_brake_2" />
+                    </div>
+                    <div class="hour2">
+                        <label class="form-label" for="timeSelect">Final:</label>
+                        <input type="time" class="form-control" formControlName="finish_brake_2" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

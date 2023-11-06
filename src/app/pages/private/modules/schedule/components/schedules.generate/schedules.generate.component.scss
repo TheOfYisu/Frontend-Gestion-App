@@ -1,0 +1,131 @@
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+.header-container {
+  margin-bottom: 3%;
+}
+.container-form {
+  margin-top: 2%;
+}
+.turnos {
+  margin: 2% 5%;
+}
+
+.container-rango {
+  display: flex;
+  justify-content: center;
+  .hour1 {
+    margin-right: 20px;
+  }
+}
+.custom-form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2% 0;
+}
+
+.time-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.time-picker-container {
+  position: relative;
+  z-index: 1000;
+}
+
+.time-picker-content {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.time-picker-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.custom-popover {
+  position: absolute;
+  top: 40px; /* Adjust the top position as needed */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+
+.container-generate {
+  padding: 2%;
+}
+.centered-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-check {
+  text-align: center;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #3498db;
+  font-size: 18px;
+  margin-top: 10px;
+}

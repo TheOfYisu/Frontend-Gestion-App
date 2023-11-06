@@ -1,0 +1,52 @@
+.OnSideNav {
+  #main {
+    margin-left: 300px;
+  }
+}
+
+.OffSideNav {
+  #main {
+    margin-left: 0px;
+  }
+}
+
+/* Estilo para la pantalla de carga */
+.isLoading {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  /* Mantenemos position: fixed */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: auto;
+  /* Habilita la interacción con elementos en la página */
+}
+
+/* Estilo para el spinner de carga */
+.spinner-border {
+  width: 4rem;
+  height: 4rem;
+  color: #007bff;
+  /* Cambia el color a tu preferencia */
+}
+
+/* Estilo para el mensaje de carga */
+.isLoading p {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Estilo para los elementos de la página principal */
+.main-content {
+  margin-top: 2%;
+  /* Agrega tus estilos para los elementos de la página principal aquí */
+  /* Por ejemplo, puedes ajustar el color de fondo y otros estilos */
+  background-color: white;
+}

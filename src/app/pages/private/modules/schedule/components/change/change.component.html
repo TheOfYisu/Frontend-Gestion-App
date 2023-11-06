@@ -1,0 +1,65 @@
+<form class="modal-change" [formGroup]="form_shedules">
+    <div class="d-flex justify-content-between">
+        <div class="mb-3" style="flex: 1;">
+            <h1 class="title-data">Information</h1>
+        </div>
+        <div class="d-flex align-items-center">
+            <button (click)="cancel()" class="btn btn-danger" style="margin-right: 3%; white-space: nowrap;">
+                <i class=" bi bi-back" style="margin-right: 10px;"></i>Cancelar
+            </button>
+            <button (click)="update()" class="btn btn-warning" style="margin-right: 3%; white-space: nowrap;">
+                <i class=" bi bi-pencil-fill" style="margin-right: 10px;"></i>Editar
+            </button>
+            <button (click)="savedata()" class="btn btn-success" style="white-space: nowrap;">
+                <i class=" bi bi-save-fill" style="margin-right: 10px;"></i>Guardar
+            </button>
+        </div>
+    </div>
+    <div class="row info">
+        <div class="col-4">
+            <label class="form-label">No° del permiso</label>
+            <input type="text" class="form-control form-control-md" formControlName="id_shedule">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Cedula</label>
+            <input type="text" class="form-control form-control-md" formControlName="dni">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control form-control-md" formControlName="name">
+        </div>
+    </div>
+    <div class="row info">
+        <div class="col-4">
+            <label class="form-label">Fecha</label>
+            <div class="input-group ">
+                <input class="form-control form-control-md" formControlName="date" name="date" ngbDatepicker
+                    #date="ngbDatepicker" />
+                <button class="btn btn-outline-secondary bi bi-calendar3" (click)="date.toggle()"
+                    type="button"></button>
+            </div>
+        </div>
+        <div class="col-4">
+            <label class="form-label" for="timeSelect">Hora de Entrada:</label>
+            <input type="time" class="form-control" formControlName="hour_entry" />
+        </div>
+        <div class="col-4">
+            <label class="form-label" for="timeSelect">Hora de Salida:</label>
+            <input type="time" class="form-control" formControlName="hour_exit" />
+        </div>
+    </div>
+    <div class="row info">
+        <div class="col-4">
+            <label class="form-label" for="timeSelect">Descanso 1:</label>
+            <input type="time" class="form-control" formControlName="hour_brake_1" />
+        </div>
+        <div class="col-4">
+            <label class="form-label" for="timeSelect">Almuerzo:</label>
+            <input type="time" class="form-control" formControlName="hour_lunch" />
+        </div>
+        <div class="col-4">
+            <label class="form-label" for="timeSelect">Descanso 2:</label>
+            <input type="time" class="form-control" formControlName="hour_brake_2" />
+        </div>
+    </div>
+</form>

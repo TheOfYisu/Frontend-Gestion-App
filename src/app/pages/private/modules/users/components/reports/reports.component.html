@@ -1,0 +1,95 @@
+<div class="navbar">
+  <app-navbar-user></app-navbar-user>
+  <button
+    class="btn btn-outline-success text-dark"
+    type="button"
+    style="
+      border-width: 3px;
+      border-color: #198754;
+      color: #012970;
+      font-size: 20px;
+    "
+  >
+    <i class="bi bi-pencil-fill" style="margin-right: 10px"></i>Descargar
+  </button>
+</div>
+<div class="reports">
+  <
+  <div class="form-group date-picker-container">
+    <label class="form-label" for="personalSelect"
+      >Rango de dias horario:</label
+    >
+    <div class="dp-hidden position-absolute">
+      <div class="input-group">
+        <input
+          name="datepicker"
+          class="form-control"
+          ngbDatepicker
+          #datepicker="ngbDatepicker"
+          [autoClose]="'outside'"
+          (dateSelect)="onDateSelection($event)"
+          [displayMonths]="1"
+          [dayTemplate]="dateTemplate"
+          outsideDays="hidden"
+          [startDate]="fromDate!"
+          tabindex="-1"
+        />
+        <ng-template #dateTemplate let-date let-focused="focused">
+          <span
+            class="custom-day"
+            [class.focused]="focused"
+            [class.range]="isRange(date)"
+            [class.faded]="isHovered(date) || isInside(date)"
+            (mouseenter)="hoveredDate = date"
+            (mouseleave)="hoveredDate = null"
+          >
+            {{ date.day }}
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="input-group">
+      <input
+        #dpDateRange
+        class="form-control"
+        placeholder="yyyy-mm-dd - yyyy-mm-dd"
+        name="dpDateRange"
+        [value]="
+          formatter.format(fromDate) + '  /  ' + formatter.format(toDate)
+        "
+        (click)="datepicker.toggle()"
+      />
+      <button
+        class="btn btn-outline-secondary bi bi-calendar3"
+        (click)="datepicker.toggle()"
+        type="button"
+      ></button>
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        (click)="search_date()"
+      >
+        <i class="bi bi-search" style="margin-right: 10px"></i>Buscar
+      </button>
+      <button
+        class="btn btn-outline-success"
+        type="button"
+        (click)="reload_date()"
+      >
+        <i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i
+        >Restablecer
+      </button>
+    </div>
+  </div>
+  <div class="table-reports">
+    <ag-grid-angular
+      style="width: 100%; height: 500px"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [gridOptions]="gridOptions"
+      (gridReady)="onCellDoubleClicked($event)"
+    >
+    </ag-grid-angular>
+  </div>
+</div>
