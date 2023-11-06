@@ -145,6 +145,7 @@ export class ListableComponent implements OnInit {
   }
 
   add_listable(content: any) {
+    this.select_edit = false;
     this.formulario.removeControl(this.id_table);
     this.formulario.reset();
     this.modalService.open(content);

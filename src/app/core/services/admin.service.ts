@@ -81,9 +81,8 @@ export class AdminService {
   }
 
   create_listable(id_listable: string, data_listable: any) {
-    console.log('Hola', id_listable);
     return this.httpClient.post(
-      `${this.urlBack}/create_${id_listable}/`,
+      `${this.urlBack}/create_${id_listable}`,
       data_listable
     );
   }
