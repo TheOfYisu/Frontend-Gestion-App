@@ -9,6 +9,7 @@ import {
   message_error_token,
 } from 'src/app/constant/message.constant';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class PrivateService implements OnInit {
   private isLoading = new BehaviorSubject<boolean>(false);
   isLoading$ = this.isLoading.asObservable();
 
-  private urlBack: string = 'http://127.0.0.1:8000';
+  private urlBack: string = environment.url_backend;
   private token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvYW4gUGVyZXoiLCJpYXQiOjE1MTYyMzkwMjJ9.2x8QwKfZ0n7Qb2lqW3a7w9u0s6wv1fK4kWlHmLgZy';
 

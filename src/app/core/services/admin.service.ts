@@ -6,6 +6,7 @@ import {
 } from '../interfaces/admin.interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +62,7 @@ export class AdminService {
     additional_data: [],
   };
 
-  private urlBack: string = 'http://127.0.0.1:8000';
+  private urlBack: string = environment.url_backend;
   private list_user = new BehaviorSubject<[]>([]);
   list_user$ = this.list_user.asObservable();
   private id_user = new BehaviorSubject<number>(0);

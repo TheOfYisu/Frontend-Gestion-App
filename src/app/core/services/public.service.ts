@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { login_interface } from '../interfaces/public.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { PrivateService } from './private.service';
 
