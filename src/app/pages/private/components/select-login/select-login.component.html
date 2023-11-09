@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Seleccione rol</h2>
+  <div class="form-group">
+    <select
+      class="form-select form-select-md"
+      aria-label="Default select example"
+      [(ngModel)]="selectedRole"
+    >
+      <option value="" disabled selected>Seleccione un rol</option>
+      <option *ngFor="let item of list_rol" [value]="item.id_rol">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+  <div class="buttons mt-3">
+    <button class="btn btn-primary" (click)="onContinue()">Continuar</button>
+    <button class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  </div>
+</div>

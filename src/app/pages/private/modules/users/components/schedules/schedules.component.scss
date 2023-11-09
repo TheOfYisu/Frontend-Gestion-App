@@ -1,0 +1,77 @@
+.schedule {
+    margin: 0 4%;
+
+    .table-schedule {
+        margin-top: 3%;
+    }
+}
+
+.no-schedules-message {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.no-schedules-message span {
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+
+.custom-day.focused {
+    background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+}
+
+.custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+}
+
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    color: #3498db;
+    font-size: 18px;
+    margin-top: 10px;
+}

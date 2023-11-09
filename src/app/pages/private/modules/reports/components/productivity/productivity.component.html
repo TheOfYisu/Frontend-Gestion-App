@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between">
+  <div style="margin-right: 15%">
+    <h1>Productividad</h1>
+  </div>
+  <div class="mb-3" style="flex: 1">
+    <label for="dateInput">Seleccione una fecha:</label>
+    <input
+      type="date"
+      id="dateInput"
+      class="form-control"
+      [(ngModel)]="selectedDate"
+      style="margin-left: 10px; margin-right: 15px"
+    />
+  </div>
+  <div class="d-flex align-items-center"></div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="white-space: nowrap"
+      (click)="onDateChange()"
+    >
+      <i class="bi bi-search" style="margin-right: 10px"></i>Buscar
+    </button>
+  </div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <button type="button" class="btn btn-primary" style="white-space: nowrap">
+      <i class="bi bi-calendar-plus" style="margin-right: 10px"></i>Generar
+      reporte
+    </button>
+  </div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <button type="button" class="btn btn-success" style="white-space: nowrap">
+      <i class="bi bi-calendar2-range" style="margin-right: 10px"></i>Descargar
+      reporte
+    </button>
+  </div>
+</div>
+
+<div class="mt-4 table-users">
+  <ag-grid-angular
+    style="width: 100%; height: 500px"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [gridOptions]="gridOptions"
+    (gridReady)="onRowDoubleClicked($event)"
+  >
+  </ag-grid-angular>
+</div>

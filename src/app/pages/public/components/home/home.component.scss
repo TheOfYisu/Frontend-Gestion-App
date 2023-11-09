@@ -1,0 +1,142 @@
+/* General styles */
+.text-bold {
+  font-weight: 600;
+}
+
+.text-normal {
+  font-weight: 400;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* Container 1 */
+.container-1 {
+  background-color: #e8f4fa;
+  width: 100%;
+  border-top: 2px solid #d2d2d2;
+  border-bottom: 2px solid #d2d2d2;
+
+  .container-row {
+    padding: 5% 10%;
+  }
+
+  .space-text {
+    margin: 10% 0;
+  }
+
+  .container-1-text {
+    text-align: left;
+
+    .text-1 {
+      @extend .text-bold;
+      font-size: 30px;
+      line-height: 50px;
+      color: #000000;
+    }
+
+    .text-2 {
+      font-style: normal;
+      font-size: 18px;
+      line-height: 204.3%;
+      color: #4b4b4b;
+    }
+  }
+
+  .container-1-img {
+    text-align: center;
+
+    .img-fluid {
+      height: 90%;
+    }
+  }
+
+  .container-1-row {
+    padding: 0% 8% 2% 8%;
+    text-align: center;
+
+    .title-card {
+      @extend .text-bold;
+      font-size: 20px;
+      color: #000000;
+    }
+
+    .text-card {
+      text-align: left;
+    }
+
+    .content-row {
+      margin-bottom: 5%;
+      text-align: right;
+    }
+
+    .img-row {
+      width: 70px;
+    }
+  }
+}
+
+/* Container 2 */
+.container-2 {
+  width: 100%;
+  padding: 5% 8% 0% 8%;
+
+  .text-1 {
+    margin-bottom: 5%;
+    padding: 0 15% 0 15%;
+
+    .title {
+      font-size: 33px;
+      line-height: 160%;
+      color: #252525;
+      margin-bottom: 5%;
+    }
+
+    .text {
+      font-size: 18px;
+      line-height: 175%;
+      color: #868686;
+    }
+  }
+
+  .row-container-2 {
+    text-align: justify;
+  }
+}
+
+/* Card Row */
+.card-row {
+  padding: 5%;
+  border-radius: 20px;
+  margin-bottom: 5%;
+
+  .title-card {
+    @extend .text-bold;
+    text-align: center;
+    font-size: 25px;
+    line-height: 170%;
+    margin-bottom: 5%;
+  }
+
+  .text-card {
+    font-size: 16px;
+    line-height: 170%;
+  }
+
+  .buttom-div {
+    text-align: center;
+  }
+  .button-card {
+    margin-top: 10%;
+    padding: 5px 20px;
+    border-radius: 20px;
+    @extend .text-bold;
+    font-size: 15px;
+    border-color: #1090cb;
+  }
+}

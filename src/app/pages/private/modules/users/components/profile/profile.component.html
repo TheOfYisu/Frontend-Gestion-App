@@ -1,0 +1,119 @@
+<div class="profile">
+  <div class="navbar">
+    <app-navbar-user></app-navbar-user>
+    <button
+      class="btn btn-outline-warning text-dark"
+      type="button"
+      style="
+        border-width: 3px;
+        border-color: #ffc107;
+        color: #012970;
+        font-size: 20px;
+      "
+      (click)="upload_users(content, data_user)"
+    >
+      <i class="bi bi-pencil-fill" style="margin-right: 10px"></i>Editar
+    </button>
+  </div>
+  <div
+    *ngIf="isLoading"
+    class="d-flex align-items-center justify-content-center"
+    style="height: 100vh"
+  >
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p class="loading-text">Cargando...</p>
+    </div>
+  </div>
+  <div class="row data-user-profile" *ngIf="!isLoading">
+    <div class="col-lg-4 data_basic_user_profile">
+      <img
+        src="{{ data_user.photo }}"
+        alt="photo_user"
+        class="img-profile img-fluid"
+      />
+      <div class="info-basic-profile">
+        <h2>{{ data_user.name }}</h2>
+        <p class="data-basic">Cargo: {{ data_user.charge }}</p>
+        <!-- <button class="btn btn-primary buttom-data-basic">Mensaje</button> -->
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-7 info-all-profile">
+      <p class="data-all">Cedula: {{ data_user.dni }}</p>
+      <hr />
+      <p class="data-all">Fecha de nacimiento: {{ data_user.dob }}</p>
+      <hr />
+      <p class="data-all">Edad: {{ data_user.age }}</p>
+      <hr />
+      <p class="data-all">Telefono: {{ data_user.phone }}</p>
+      <hr />
+      <p class="data-all">Correo: {{ data_user.email }}</p>
+      <hr />
+      <p class="data-all">Dirrecion: {{ data_user.address }}</p>
+      <hr />
+      <p class="data-all">Fecha de ingreso: {{ data_user.date_enter }}</p>
+      <hr />
+      <p class="data-all">Estado: {{ data_user.status }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Subir usuraios</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close_modal(content, 'cerrar')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input
+          type="text"
+          class="form-control form-control-md"
+          formControlName="phone"
+        />
+      </div>
+
+      <hr />
+
+      <div class="form-group">
+        <label class="form-label">Correo</label>
+        <span class="required-field">*</span>
+        <input
+          type="email"
+          class="form-control form-control-md"
+          formControlName="email"
+        />
+      </div>
+
+      <hr />
+
+      <div class="form-group">
+        <label class="form-label">Dirección</label>
+        <input
+          type="text"
+          class="form-control form-control-md"
+          formControlName="address"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="close_modal(content, 'cancelar')"
+    >
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-success" (click)="send_file()">
+      Guardar
+    </button>
+  </div>
+</ng-template>

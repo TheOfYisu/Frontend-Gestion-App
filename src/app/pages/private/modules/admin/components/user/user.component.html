@@ -1,0 +1,581 @@
+<!-- <div
+  *ngIf="isLoading"
+  class="d-flex align-items-center justify-content-center"
+  style="height: 100vh"
+>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+    <p class="loading-text">Cargando...</p>
+  </div>
+</div> -->
+<div class="d-flex justify-content-between align-items-center">
+  <div style="flex: 1; margin-top: 10px">
+    <h1>Información</h1>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex" style="margin-right: 15px">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        style="white-space: nowrap"
+      >
+        <i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i
+        >Restablecer contraseña
+      </button>
+    </div>
+    <div class="d-flex" style="margin-right: 15px">
+      <button
+        type="button"
+        class="btn btn-outline-warning"
+        style="white-space: nowrap"
+        (click)="edit_form_data()"
+      >
+        <i class="bi bi-pencil-fill" style="margin-right: 10px"></i>Editar
+      </button>
+    </div>
+    <div class="d-flex">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        style="white-space: nowrap"
+        [disabled]="!valid_edit"
+        (click)="save_form_data()"
+      >
+        <i class="bi bi-save-fill" style="margin-right: 10px"></i>Guardar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="datauserall">
+  <form [formGroup]="form_data" class="basic-data">
+    <div class="row">
+      <div
+        class="img-user col-12 col-lg-4 col-md-4 align-items-center d-flex justify-content-center"
+      >
+        <img src="{{ this.form_data.get('photo')?.value }}" width="200px" />
+      </div>
+      <div class="data-user col-12 col-lg-8 col-md-8">
+        <div class="form-data row">
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('name')"
+            [class.has-correct]="isFieldValid('name') && isFieldDirty('name')"
+          >
+            <label class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="name"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+              El nombre es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-correct]="isFieldValid('name2') && isFieldDirty('name2')"
+          >
+            <label class="form-label">Segundo nombre</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="name2"
+            />
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('lastname')"
+            [class.has-correct]="
+              isFieldValid('lastname') && isFieldDirty('lastname')
+            "
+          >
+            <label class="form-label">Primer apellido</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="lastname"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('lastname')">
+              El apellido es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-correct]="
+              isFieldValid('lastname2') && isFieldDirty('lastname2')
+            "
+          >
+            <label class="form-label">Segundo apellido</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="lastname2"
+            />
+          </div>
+        </div>
+        <div class="form-data row">
+          <div
+            class="form-group col-12 col-lg-4 col-md-4"
+            [class.has-correct]="fileselected"
+          >
+            <label class="form-label">Foto de perfil</label>
+            <input
+              type="file"
+              class="form-control"
+              (change)="onFileSelected($event)"
+              [disabled]="!valid_edit"
+            />
+          </div>
+
+          <div
+            class="form-group col-12 col-lg-4 col-md-4"
+            [class.has-error]="isFieldInvalid('dni')"
+            [class.has-correct]="isFieldValid('dni') && isFieldDirty('dni')"
+          >
+            <label class="form-label">Cedula</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="dni"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('dni')">
+              La cedula es requerida.
+            </div>
+          </div>
+          <div class="form-group col-12 col-lg-4 col-md-4">
+            <label class="form-label">Fecha de nacimiento</label>
+            <div class="input-group">
+              <input
+                class="form-control form-control-md"
+                formControlName="dob"
+                name="dob"
+                ngbDatepicker
+                #dob="ngbDatepicker"
+              />
+              <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="dob.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="other-data">
+      <div class="row">
+        <div
+          class="form-group col-lg-3 col-md-3 col-12"
+          [class.has-error]="isFieldInvalid('phone')"
+          [class.has-correct]="isFieldValid('phone') && isFieldDirty('phone')"
+        >
+          <label class="form-label">Teléfono</label>
+          <input
+            type="number"
+            class="form-control form-control-md"
+            formControlName="phone"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('phone')">
+            El teléfono es requerido.
+          </div>
+        </div>
+        <div
+          class="form-group col-lg-3 col-md-3 col-12"
+          [class.has-error]="isFieldInvalid('email')"
+          [class.has-correct]="isFieldValid('email') && isFieldDirty('email')"
+        >
+          <label class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            class="form-control form-control-md"
+            formControlName="email"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+            El correo electrónico es requerido.
+          </div>
+        </div>
+        <div
+          class="form-group col-lg-3 col-md-3 col-12"
+          [class.has-error]="isFieldInvalid('email')"
+          [class.has-correct]="isFieldValid('email') && isFieldDirty('email')"
+        >
+          <label class="form-label">Cargo</label>
+          <input
+            type="email"
+            class="form-control form-control-md"
+            formControlName="position"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+            El cargo es requerido.
+          </div>
+        </div>
+        <div
+          class="form-group col-lg-3 col-md-3 col-12"
+          [class.has-error]="isFieldInvalid('address')"
+          [class.has-correct]="
+            isFieldValid('address') && isFieldDirty('address')
+          "
+        >
+          <label class="form-label">Dirección</label>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="address"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('address')">
+            La dirección es requerida.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-data other-data">
+      <div class="row">
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-error]="isFieldInvalid('date_entry')"
+          [class.has-correct]="
+            isFieldValid('date_entry') && isFieldDirty('date_entry')
+          "
+        >
+          <label class="form-label">Fecha de ingreso</label>
+          <div class="input-group">
+            <input
+              class="form-control form-control-md"
+              formControlName="entry_date"
+              name="entry_date"
+              ngbDatepicker
+              #entryDate="ngbDatepicker"
+            />
+            <button
+              class="btn btn-outline-secondary bi bi-calendar3"
+              (click)="entryDate.toggle()"
+              type="button"
+            ></button>
+          </div>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('date_entry')">
+            La fecha de ingreso es requerida.
+          </div>
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-correct]="isFieldValid('card') && isFieldDirty('card')"
+        >
+          <label class="form-label"># de Tarjeta</label>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="card"
+          />
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-error]="isFieldInvalid('date_entry')"
+          [class.has-correct]="
+            isFieldValid('date_entry') && isFieldDirty('date_entry')
+          "
+        >
+          <label class="form-label">Fecha de salida</label>
+          <div class="input-group">
+            <input
+              class="form-control form-control-md"
+              formControlName="exit_date"
+              name="exit_date"
+              ngbDatepicker
+              #entryExit="ngbDatepicker"
+            />
+            <button
+              class="btn btn-outline-secondary bi bi-calendar3"
+              (click)="entryExit.toggle()"
+              type="button"
+            ></button>
+          </div>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('date_entry')">
+            La fecha de ingreso es requerida.
+          </div>
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-error]="isFieldInvalid('hours_weekly')"
+          [class.has-correct]="
+            isFieldValid('hours_weekly') && isFieldDirty('hours_weekly')
+          "
+        >
+          <label class="form-label"># de Horas Semanales</label>
+          <input
+            type="number"
+            class="form-control form-control-md"
+            formControlName="weekly_hours"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('hours_weekly')">
+            Las horas semanales son requeridas.
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="tables_user row">
+    <div class="table_list table_modules col-12 col-md-6 col-lg-6">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Roles del usuario</h2>
+        <div class="d-flex" style="margin-right: 15px">
+          <button
+            type="button"
+            class="btn btn-lg btn-outline-primary"
+            style="white-space: nowrap"
+            (click)="add_listable(content_rol, 'rol')"
+          >
+            <i class="bi bi-person-fill-add" style="margin-right: 10px"></i
+            >Añadir
+          </button>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Estado</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data_table_rol">
+            <th scope="row">{{ item.id_rol }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.status ? "Activo" : "Inactivo" }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="update_listable(item, 'rol', content_rol)"
+              >
+                <i class="bi bi-pencil-fill" style="margin-right: 10px"></i
+                >Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table_list table_modules col-12 col-md-6 col-lg-6">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Modulos del usuario</h2>
+        <div class="d-flex" style="margin-right: 15px">
+          <button
+            type="button"
+            class="btn btn-lg btn-outline-primary"
+            style="white-space: nowrap"
+            (click)="add_listable(content_modules, 'modules')"
+          >
+            <i class="bi bi-person-fill-add" style="margin-right: 10px"></i
+            >Añadir
+          </button>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Estado</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data_table_module">
+            <th scope="row">{{ item.id_modules }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.status ? "Activo" : "Inactivo" }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="update_listable(item, 'modules', content_modules)"
+              >
+                <i class="bi bi-pencil-fill" style="margin-right: 10px"></i
+                >Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="additional_data"></div>
+</div>
+
+<div>
+  <!-- Modal Add listable rol -->
+  <ng-template #content_rol>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="edit_tables">
+        Editar Roles del usuario
+      </h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="!edit_tables">
+        Añadir Roles del usuario
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="close_modal(content_rol, 'cerrar')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form_rol">
+        <div class="form-group" *ngIf="edit_tables">
+          <label for="id">ID</label>
+          <input
+            type="text"
+            id="id"
+            formControlName="id_userxrol"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Rol</label>
+          <span class="required-field">*</span>
+          <select
+            id="rol"
+            formControlName="id_rol"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option selected></option>
+            <option *ngFor="let items of list_rol" value="{{ items.id_rol }}">
+              {{ items.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="edit_tables">
+          <label for="id">Descripcion</label>
+          <input
+            type="text"
+            id="id"
+            formControlName="description"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="status">Estado</label>
+          <span class="required-field">*</span>
+          <select id="status" formControlName="status" class="form-select">
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="close_modal(content_rol, 'cancelar')"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        [disabled]="!form_rol.valid"
+      >
+        Guardar
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<div>
+  <!-- Modal Add listable -->
+  <ng-template #content_modules>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="edit_tables">
+        Editar modulos
+      </h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf="!edit_tables">
+        Añadir modulos
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="close_modal(content_modules, 'cerrar')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form_modules">
+        <div class="form-group" *ngIf="edit_tables">
+          <label for="id">ID</label>
+          <input
+            type="text"
+            id="id"
+            formControlName="id_userxrolxmod"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="status">Rol</label>
+          <span class="required-field">*</span>
+          <select id="rol" formControlName="id_rol" class="form-select">
+            <option selected></option>
+            <option *ngFor="let items of list_rol" value="{{ items.id_rol }}">
+              {{ items.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="status">Modulos</label>
+          <span class="required-field">*</span>
+          <select id="modules" formControlName="id_modules" class="form-select">
+            <option selected></option>
+            <option
+              *ngFor="let items of list_modules"
+              value="{{ items.id_modules }}"
+            >
+              {{ items.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="edit_tables">
+          <label for="id">Descripcion</label>
+          <input
+            type="text"
+            id="id"
+            formControlName="description"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="status">Estado</label>
+          <span class="required-field">*</span>
+          <select id="status" formControlName="status" class="form-select">
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="close_modal(content_modules, 'cancelar')"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        [disabled]="!form_modules.valid"
+      >
+        Guardar
+      </button>
+    </div>
+  </ng-template>
+</div>

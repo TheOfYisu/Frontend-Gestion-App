@@ -1,0 +1,78 @@
+.data-user-profile {
+    margin: 2% 4%;
+
+
+    .data_basic_user_profile {
+        background-color: #f0f0f0;
+        border-radius: 30px;
+        margin: 0;
+        padding: 50px 5%;
+        text-align: center;
+        justify-content: center;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+        .img-profile {
+            width: 75%;
+            display: block;
+            margin: 0 auto 15% auto;
+            border-radius: 30px;
+        }
+
+        .data-basic {
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+
+        .buttom-data-basic {
+            margin-top: 10%;
+        }
+    }
+
+    .info-all-profile {
+        margin: 0;
+        padding: 30px 4%;
+        background-color: #f0f0f0;
+        border-radius: 30px;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+
+        .data-all {
+            font-size: 20px;
+            padding: 2px 0;
+
+        }
+    }
+}
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    color: #3498db;
+    font-size: 18px;
+    margin-top: 10px;
+}

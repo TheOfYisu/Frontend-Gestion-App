@@ -1,0 +1,179 @@
+<div>
+  <nav class="navbar navbar-expand-lg">
+    <div>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <a class="navbar-brand">Opciones</a>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarTogglerDemo01"
+        style="margin-top: -25px"
+      >
+        <ul class="navbar-nav me-auto mb-lg-0">
+          <li
+            class="nav-item"
+            *ngFor="let item of navbar_profile"
+            style="border-bottom: 1px #012970 solid"
+          >
+            <a
+              class="nav-link"
+              aria-current="page"
+              (click)="charge_listable(item.id, item.value)"
+              ><i class="{{ item.icon }}" style="margin-right: 10px"></i
+              >{{ item.value }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div
+    *ngIf="isloading"
+    class="loading d-flex align-items-center justify-content-center"
+    style="height: 100%"
+  >
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p class="loading-text">Cargando...</p>
+    </div>
+  </div>
+  <div class="table-tables" *ngIf="!isloading">
+    <div class="d-flex justify-content-between" style="margin-top: 15px">
+      <div class="mb-3" style="flex: 1">
+        <h1>{{ name_table }}</h1>
+      </div>
+      <div class="d-flex align-items-center">
+        <button
+          type="button"
+          class="btn btn-lg btn-outline-primary"
+          (click)="add_listable(content)"
+        >
+          <i class="bi bi-person-fill-add" style="margin-right: 10px"></i>Añadir
+          {{ name_table }}
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!data_table && !error_back" style="text-align: center">
+      <h3>No se encuentra registros de {{ name_table }} en el sistema</h3>
+    </div>
+    <table class="table" *ngIf="data_table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Estado</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data_table">
+          <th scope="row">{{ item[id_table] }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.status ? "Activo" : "Inactivo" }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="edit_list(item, content)"
+            >
+              <i class="bi bi-pencil-fill" style="margin-right: 10px"></i>Editar
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="eliminar_list(item[id_table])"
+            >
+              <i class="bi bi-pencil-fill" style="margin-right: 10px"></i
+              >Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Add listable -->
+<ng-template #content>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Añadir {{ name_table }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close_modal(content, 'cerrar')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formulario">
+      <div class="form-group" *ngIf="formulario.controls[id_table]">
+        <label for="id">ID</label>
+        <input
+          type="text"
+          id="id"
+          formControlName="{{ id_table }}"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <span class="required-field">*</span>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Descripcion</label>
+        <span class="required-field">*</span>
+        <textarea
+          class="form-control"
+          id="description"
+          formControlName="description"
+          class="form-control"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <span class="required-field">*</span>
+        <select id="status" formControlName="status" class="form-select">
+          <option value="1">Activo</option>
+          <option value="0">Inactivo</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="close_modal(content, 'cancelar')"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="save_add_listable()"
+      [disabled]="!formulario.valid"
+    >
+      Guardar
+    </button>
+  </div>
+</ng-template>

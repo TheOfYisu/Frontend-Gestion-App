@@ -1,0 +1,358 @@
+<div class="modal-body" id="myModal">
+  <div class="d-flex justify-content-between">
+    <div class="mb-3" style="flex: 1">
+      <h1 class="title-data">Nuevo usuario</h1>
+    </div>
+    <div class="d-flex align-items-center">
+      <button
+        type="button"
+        class="btn btn-danger"
+        style="margin-right: 3%; white-space: nowrap"
+        (click)="close_modal()"
+      >
+        <i class="bi bi-back" style="margin-right: 10px"></i>Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        style="margin-right: 3%; white-space: nowrap"
+        (click)="generatePassword()"
+      >
+        <i class="bi bi-repeat" style="margin-right: 10px"></i>Generar
+        Contraseña
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        style="white-space: nowrap"
+        (click)="save_form()"
+      >
+        <i class="bi bi-save-fill" style="margin-right: 10px"></i>Guardar
+      </button>
+    </div>
+  </div>
+  <div class="datauserall">
+    <form [formGroup]="FormData" class="basic-data" autocomplete="off">
+      <div class="form-data row">
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-error]="isFieldInvalid('name')"
+          [class.has-correct]="isFieldValid('name') && isFieldDirty('name')"
+        >
+          <label class="form-label">Nombre</label>
+          <span class="required-field">*</span>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="name"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+            El nombre es requerido.
+          </div>
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-correct]="isFieldValid('name2') && isFieldDirty('name2')"
+        >
+          <label class="form-label">Segundo nombre</label>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="name2"
+          />
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-error]="isFieldInvalid('lastname')"
+          [class.has-correct]="
+            isFieldValid('lastname') && isFieldDirty('lastname')
+          "
+        >
+          <label class="form-label">Apellido</label>
+          <span class="required-field">*</span>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="lastname"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('lastname')">
+            El apellido es requerido.
+          </div>
+        </div>
+        <div
+          class="form-group col-12 col-lg-3 col-md-3"
+          [class.has-correct]="
+            isFieldValid('lastname2') && isFieldDirty('lastname2')
+          "
+        >
+          <label class="form-label">Segundo apellido</label>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="lastname2"
+          />
+        </div>
+      </div>
+
+      <div class="form-data row">
+        <div
+          class="form-group col-12 col-lg-4 col-md-4"
+          [class.has-correct]="fileselected"
+        >
+          <label class="form-label">Foto de perfil</label>
+          <input
+            type="file"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept=".jpg, .jpeg"
+          />
+        </div>
+
+        <div
+          class="form-group col-12 col-lg-4 col-md-4"
+          [class.has-error]="isFieldInvalid('dni')"
+          [class.has-correct]="isFieldValid('dni') && isFieldDirty('dni')"
+        >
+          <label class="form-label">Cedula</label>
+          <span class="required-field">*</span>
+          <input
+            type="text"
+            class="form-control form-control-md"
+            formControlName="dni"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('dni')">
+            La cedula es requerida.
+          </div>
+        </div>
+        <div
+          class="form-group col-12 col-lg-4 col-md-4"
+          [class.has-error]="isFieldInvalid('dob')"
+          [class.has-correct]="isFieldValid('dob') && isFieldDirty('dob')"
+        >
+          <label class="form-label">Fecha de nacimiento</label>
+          <span class="required-field">*</span>
+          <div class="input-group">
+            <input
+              class="form-control form-control-md"
+              formControlName="dob"
+              name="dob"
+              ngbDatepicker
+              #dob="ngbDatepicker"
+            />
+            <button
+              class="btn btn-outline-secondary bi bi-calendar3"
+              (click)="dob.toggle()"
+              type="button"
+            ></button>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('dob')">
+              La fecha de ingreso es requerida.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="other-data">
+        <div class="row">
+          <div
+            class="form-group col-lg-4 col-md-4 col-12"
+            [class.has-error]="isFieldInvalid('phone')"
+            [class.has-correct]="isFieldValid('phone') && isFieldDirty('phone')"
+          >
+            <label class="form-label">Teléfono</label>
+            <span class="required-field">*</span>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="phone"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('phone')">
+              El teléfono es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-lg-4 col-md-4 col-12"
+            [class.has-error]="isFieldInvalid('email')"
+            [class.has-correct]="isFieldValid('email') && isFieldDirty('email')"
+          >
+            <label class="form-label">Correo electrónico</label>
+            <span class="required-field">*</span>
+            <input
+              type="email"
+              class="form-control form-control-md"
+              formControlName="email"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+              El correo electrónico es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-lg-4 col-md-4 col-12"
+            [class.has-error]="isFieldInvalid('address')"
+            [class.has-correct]="
+              isFieldValid('address') && isFieldDirty('address')
+            "
+          >
+            <label class="form-label">Dirección</label>
+            <span class="required-field">*</span>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="address"
+            />
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('address')">
+              La dirección es requerida.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="other-data">
+        <div class="row">
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('date_entry')"
+            [class.has-correct]="
+              isFieldValid('date_entry') && isFieldDirty('date_entry')
+            "
+          >
+            <label class="form-label">Fecha de ingreso</label>
+            <span class="required-field">*</span>
+            <div class="input-group">
+              <input
+                class="form-control form-control-md"
+                formControlName="date_entry"
+                name="entryDate"
+                ngbDatepicker
+                #entryDate="ngbDatepicker"
+              />
+              <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="entryDate.toggle()"
+                type="button"
+              ></button>
+            </div>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('date_entry')">
+              La fecha de ingreso es requerida.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('status')"
+            [class.has-correct]="
+              isFieldValid('status') && isFieldDirty('status')
+            "
+          >
+            <label class="form-label">Estado</label>
+            <span class="required-field">*</span>
+            <select class="form-select form-select-md" formControlName="status">
+              <option selected></option>
+              <option value="1">Activo</option>
+              <option value="0">Desactivado</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('status')">
+              El estado es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-correct]="generatepassword"
+          >
+            <label class="form-label">Contraseña</label>
+            <span class="required-field">*</span>
+            <input
+              type="password"
+              class="form-control form-control-md"
+              formControlName="password"
+              readonly
+            />
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-correct]="isFieldValid('card') && isFieldDirty('card')"
+          >
+            <label class="form-label"># de Tarjeta</label>
+            <input
+              type="text"
+              class="form-control form-control-md"
+              formControlName="card"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="business-data">
+        <div class="row">
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('typeuser')"
+            [class.has-correct]="isFieldValid('rol') && isFieldDirty('rol')"
+          >
+            <label class="form-label">Tipo de usuario</label>
+            <span class="required-field">*</span>
+            <select
+              class="form-select form-select-md"
+              aria-label="Default select example"
+              formControlName="rol"
+            >
+              <option selected></option>
+              <option *ngFor="let items of list_rol" value="{{ items.id_rol }}">
+                {{ items.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('typeuser')">
+              El tipo de usuario es requerido.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('hours_weekly')"
+            [class.has-correct]="
+              isFieldValid('hours_weekly') && isFieldDirty('hours_weekly')
+            "
+          >
+            <label class="form-label"># de Horas Semanales</label>
+            <span class="required-field">*</span>
+            <input
+              type="number"
+              class="form-control form-control-md"
+              formControlName="hours_weekly"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="isFieldInvalid('hours_weekly')"
+            >
+              Las horas semanales son requeridas.
+            </div>
+          </div>
+          <div
+            class="form-group col-12 col-lg-3 col-md-3"
+            [class.has-error]="isFieldInvalid('position')"
+            [class.has-correct]="
+              isFieldValid('position') && isFieldDirty('position')
+            "
+          >
+            <label class="form-label">Cargo</label>
+            <span class="required-field">*</span>
+            <select
+              class="form-select form-select-md"
+              aria-label="Default select example"
+              formControlName="position"
+            >
+              <!-- (change)="updateleader($event)" -->
+
+              <option selected></option>
+              <option
+                *ngFor="let items of list_position"
+                value="{{ items.id_position }}"
+              >
+                {{ items.name }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('position')">
+              El Cargo es requerido.
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
