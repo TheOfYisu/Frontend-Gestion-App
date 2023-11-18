@@ -46,10 +46,6 @@ const routes: Routes = [
       { path: 'chatbot', component: ChatbotComponent },
     ],
   },
-  {
-    path: 'select_rol',
-    component: SelectLoginComponent,
-  },
 ];
 
 @NgModule({

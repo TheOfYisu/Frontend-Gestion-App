@@ -10,6 +10,7 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 import { environment } from 'src/environments/environment.development';
 import { SchedulesFormpermissionsComponent } from '../../../schedule/components/schedules.formpermissions/schedules.formpermissions.component';
 import { UserService } from 'src/app/core/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-schedules',
@@ -112,11 +113,39 @@ export class SchedulesComponent implements OnInit {
     if (date_init !== null && date_finish !== null) {
       this.UserService.get_data_schedules(date_init, date_finish).subscribe(
         (res) => {
+          console.log(res.status);
           this.rowData = res;
           this.isLoading = false;
         },
         (err) => {
           console.error(err);
+          switch (err.status) {
+            //Error de no encontrar datos entre fechas.
+            case 400: {
+              this.isLoading = false;
+              this.rowData = [];
+              break;
+            }
+            //Error no encuentra el usuario.
+            case 401: {
+              //this.UserService.session_expired();
+              break;
+            }
+            //Error de servidor.
+            default: {
+              this.isLoading = false;
+              const errorMessage =
+                err.error.detail ||
+                'No se ha podido establecer la conexión con el servidor, póngase en contacto con el administrador';
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessage,
+                toast: true,
+              });
+              break;
+            }
+          }
         }
       );
     }

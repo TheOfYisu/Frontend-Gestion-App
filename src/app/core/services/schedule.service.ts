@@ -12,26 +12,15 @@ export class ScheduleService {
   program_all$ = this.program_all.asObservable();
 
   charge_program_all(date: string) {
-    this.HttpClient.get(`${this.urlBack}/get_program_all/${date}`).subscribe(
+    this.HttpClient.get(`${this.urlBack}/get_schedules_date/${date}`).subscribe(
       (date) => {
         this.program_all.next(date);
       },
       (error) => {
-        const data2: any = [
-          {
-            id_schedule: 1,
-            name: 'Juan Pérez',
-            position: 'Gerente',
-            dni: '123456789',
-            entry_time: '08:00:00',
-            exit_time: '17:00:00',
-            brake_time_1: '12:00:00',
-            brake_time_2: '14:00:00',
-            lunch_time: '13:00:00',
-            date: '2023-10-27',
-          },
-        ];
-        this.program_all.next(data2);
+        console.log('si', error);
+        if (error.status === 400) {
+          this.program_all.next([]);
+        }
       }
     );
   }
@@ -126,18 +115,13 @@ export class ScheduleService {
 
   getdataschedule(id_schedules: string): Observable<any> {
     return this.HttpClient.get<any>(
-      `${this.urlBack}/schedules/getdataschedule/${id_schedules}`
+      `${this.urlBack}/get_schedule_id/${id_schedules}`
     );
   }
 
-  update_schedule(data: any) {
-    const id_schedule = data.id_shedule;
-    delete data.dni;
-    delete data.id_shedule;
-    delete data.name;
-    delete data.id_staff;
+  update_schedule(id_schedule: any, data: any) {
     return this.HttpClient.put(
-      `${this.urlBack}/schedules/update_schedule/${id_schedule}`,
+      `${this.urlBack}/update_schedule/${id_schedule}`,
       data
     );
   }
@@ -193,5 +177,35 @@ export class ScheduleService {
   save_pdf(data: FormData): Observable<any> {
     console.log(data);
     return this.HttpClient.post(`${this.urlBack}/schedules/save_pdf`, data);
+  }
+
+  //Reporte de horario en un rango de dias
+  get_horario_range_date(date_init: string, date_finish: string) {
+    return this.HttpClient.get(
+      `${this.urlBack}/get_horario_range_date/${date_init}/${date_finish}`,
+      {
+        responseType: 'arraybuffer', // Importante para manejar archivos binarios
+        observe: 'response', // Para obtener información sobre la respuesta
+      }
+    );
+  }
+
+  //Reporte de horario en un dia
+  get_horario_day(date: string) {
+    return this.HttpClient.get(
+      `${this.urlBack}/get_schedules_date_report/${date}`,
+      {
+        responseType: 'arraybuffer', // Importante para manejar archivos binarios
+        observe: 'response', // Para obtener información sobre la respuesta
+      }
+    );
+  }
+
+  //Reporte de todos los horarios
+  get_horario() {
+    return this.HttpClient.get(`${this.urlBack}/get_horarios_excel`, {
+      responseType: 'arraybuffer', // Importante para manejar archivos binarios
+      observe: 'response', // Para obtener información sobre la respuesta
+    });
   }
 }

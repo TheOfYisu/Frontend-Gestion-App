@@ -7,6 +7,7 @@ import {
 import { BehaviorSubject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root',
@@ -124,15 +125,22 @@ export class AdminService {
   }
 
   get_id_user() {
-    // this.id_user.subscribe((data) => {
-    //   return this.httpClient.get(`${this.urlBack}/get_user/${data}`);
-    // });
-    return this.data_user;
+    let id_user: string = '';
+    this.id_user.subscribe((data) => {
+      id_user = data.toString();
+    });
+    return this.httpClient.get(`${this.urlBack}/get_user/${id_user}`);
   }
 
   get_userxrol_user(id_user_send: string) {
     return this.httpClient.get(
       `${this.urlBack}/get_userxrol_user/${id_user_send}`
+    );
+  }
+
+  get_user_modules(id_user_send: string) {
+    return this.httpClient.get(
+      `${this.urlBack}/get_user_modules/${id_user_send}`
     );
   }
 

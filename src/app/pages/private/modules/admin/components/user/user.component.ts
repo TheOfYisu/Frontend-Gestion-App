@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { forkJoin } from 'rxjs';
 import {
   get_listable_modules_interface,
   get_listable_rol_interface,
@@ -37,8 +38,8 @@ export class UserComponent implements OnInit {
   public selectstatus: boolean = false;
   public isLoading: boolean = true;
 
-  public data_table_module: any;
-  public data_table_rol: any;
+  public data_table_module: any = [];
+  public data_table_rol: any = [];
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -99,43 +100,57 @@ export class UserComponent implements OnInit {
 
   //Carge de datos del usuario
   updatedata() {
-    // this.AdminService.get_id_user().subscribe(
-    //   (data: any) => {
-    //     this.FormData.setValue(data.data);
-    let data = this.AdminService.get_id_user();
-    if (data.data.photo === '') {
-      data.data.photo = environment.photo_user;
-    }
-    data.data.dob = this.convert_DateString_DateObjet(data.data.dob);
-    data.data.entry_date = this.convert_DateString_DateObjet(
-      data.data.entry_date
-    );
-    const exit_date = data.data.exit_date;
-    if (exit_date != '' || exit_date != null) {
-      data.data.exit_date = this.convert_DateString_DateObjet(
-        data.data.exit_date
-      );
-    } else {
-      data.data.exit_date(this.convert_DateString_DateObjet('0000-00-00'));
-    }
-    data.data.weekly_hours = this.convertirhora(data.data.weekly_hours);
-    this.data_table_rol = data.roles;
-    this.data_table_module = data.modules;
-    this.form_data.setValue(data.data);
-    this.form_data_copy = data.data;
-    this.form_data.disable();
+    this.AdminService.get_id_user().subscribe((data: any) => {
+      this.form_data.setValue(data);
+      if (data.photo === '' || data.photo === null) {
+        data.photo = environment.photo_user;
+      }
 
-    //   },
-    //   (error: any) => {}
-    // );
+      data.dob = this.convert_DateString_DateObjet(data.dob);
+      data.entry_date = this.convert_DateString_DateObjet(data.entry_date);
+
+      const exit_date = data.exit_date;
+
+      if (exit_date !== null) {
+        data.exit_date = this.convert_DateString_DateObjet(data.exit_date);
+      } else {
+        data.exit_date = this.convert_DateString_DateObjet('0000-00-00');
+      }
+
+      data.weekly_hours = this.convertirhora(data.weekly_hours);
+      this.form_data.setValue(data);
+      this.form_data_copy = data;
+      this.form_data.disable();
+
+      console.log('modules', this.data_table_module);
+      console.log('rol', this.data_table_rol);
+    });
+    this.AdminService.get_userxrol_user(
+      this.form_data.get('id_users')?.value
+    ).subscribe((data) => {
+      this.data_table_rol = data;
+    });
+    const modulesObservable = this.AdminService.get_user_modules(
+      this.form_data.get('id_users')?.value
+    );
+
+    forkJoin([rolesObservable, modulesObservable]).subscribe(
+      ([rolesData, modulesData]) => {
+        console.log(rolesData);
+        console.log(modulesData);
+        this.data_table_module = modulesData;
+      }
+    );
   }
 
   //Cargar los datos de las listas al momento de agregar.
   uploade_listable() {
     this.AdminService.get_listable('rol').subscribe((data) => {
+      console.log('roles', data);
       this.list_rol = data;
     });
     this.AdminService.get_listable('modules').subscribe((data) => {
+      console.log('modulos', data);
       this.list_modules = data;
     });
   }
@@ -289,6 +304,7 @@ export class UserComponent implements OnInit {
     month: number;
     day: number;
   } {
+    console.log(dateString);
     const fechaPartes = dateString.split('-');
     const year = parseInt(fechaPartes[0], 10);
     const month = parseInt(fechaPartes[1], 10);

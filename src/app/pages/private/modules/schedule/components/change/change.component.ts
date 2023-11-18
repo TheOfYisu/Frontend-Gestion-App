@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class ChangeComponent implements OnInit {
   private formget: any;
   public form_shedules: FormGroup = this.create_form();
-
+  buttom_save: Boolean = true;
   constructor(
     private SchedulesService: ScheduleService,
     private FormBuilder: FormBuilder
@@ -23,6 +23,7 @@ export class ChangeComponent implements OnInit {
     const id_schedules = this.SchedulesService.id_schedules;
     this.SchedulesService.getdataschedule(id_schedules).subscribe(
       (data) => {
+        console.log(data);
         this.form_shedules.setValue(data);
         const convertedDate = this.convert_DateString_DateObjet(data.date);
         this.form_shedules.get('date')?.setValue(convertedDate);
@@ -37,16 +38,15 @@ export class ChangeComponent implements OnInit {
 
   create_form() {
     return (this.form_shedules = this.FormBuilder.group({
-      id_shedule: ['', Validators.required],
-      hour_lunch: ['', Validators.required],
-      hour_exit: ['', Validators.required],
-      hour_entry: ['', Validators.required],
-      hour_brake_2: ['', Validators.required],
-      hour_brake_1: ['', Validators.required],
+      id_schedule: ['', Validators.required],
+      lunch_time: ['', Validators.required],
+      exit_time: ['', Validators.required],
+      entry_time: ['', Validators.required],
+      brake_time_2: ['', Validators.required],
+      brake_time_1: ['', Validators.required],
       dni: ['', Validators.required],
       name: ['', Validators.required],
       date: ['', Validators.required],
-      id_staff: [''],
     }));
   }
 
@@ -63,6 +63,14 @@ export class ChangeComponent implements OnInit {
     });
 
     if (hasChanges) {
+      const id_schedule = this.form_shedules.get('id_schedule')?.value;
+      const data = {
+        entry_time: this.form_shedules.get('entry_time')?.value,
+        exit_time: this.form_shedules.get('exit_time')?.value,
+        brake_time_1: this.form_shedules.get('brake_time_1')?.value,
+        brake_time_2: this.form_shedules.get('brake_time_2')?.value,
+        lunch_time: this.form_shedules.get('lunch_time')?.value,
+      };
       Swal.fire({
         title: '¿Estás seguro?',
         text: '¿Toda la informacion es correcta?',
@@ -75,9 +83,7 @@ export class ChangeComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.form_shedules.disable();
-          this.SchedulesService.update_schedule(
-            this.form_shedules.value
-          ).subscribe(
+          this.SchedulesService.update_schedule(id_schedule, data).subscribe(
             (data) => {
               this.getdataschedule();
               Swal.fire({
@@ -88,6 +94,7 @@ export class ChangeComponent implements OnInit {
                 timer: 1500,
                 toast: true,
               });
+              this.buttom_save = true;
               this.SchedulesService.closeModal();
               this.SchedulesService.get_schedules();
             },
@@ -99,12 +106,13 @@ export class ChangeComponent implements OnInit {
   }
 
   update() {
+    this.buttom_save = false;
     const list_form = [
-      'hour_lunch',
-      'hour_exit',
-      'hour_entry',
-      'hour_brake_2',
-      'hour_brake_1',
+      'lunch_time',
+      'exit_time',
+      'entry_time',
+      'brake_time_1',
+      'brake_time_2',
     ];
     list_form.forEach((element: string) => this.disableform(element));
   }
@@ -121,6 +129,7 @@ export class ChangeComponent implements OnInit {
       toast: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.buttom_save = true;
         this.SchedulesService.closeModal();
       }
     });

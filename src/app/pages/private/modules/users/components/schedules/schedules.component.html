@@ -81,7 +81,7 @@
         </button>
       </div>
     </div>
-    <div class="no-schedules-message" *ngIf="rowData.length < 1 && !isLoading">
+    <div class="no-schedules-message" *ngIf="rowData.length == 0 && !isLoading">
       <span
         >No existen horarios dentro del rango de fechas seleccionado, por favor
         selecciona otro rango de fechas.</span

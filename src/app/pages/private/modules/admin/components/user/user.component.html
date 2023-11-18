@@ -359,6 +359,9 @@
             </td>
           </tr>
         </tbody>
+        <div>
+          <p>no hay roles asignado para este usuario</p>
+        </div>
       </table>
     </div>
     <div class="table_list table_modules col-12 col-md-6 col-lg-6">
@@ -386,7 +389,7 @@
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="data_table_module.length > 0">
           <tr *ngFor="let item of data_table_module">
             <th scope="row">{{ item.id_modules }}</th>
             <td>{{ item.name }}</td>
@@ -404,6 +407,9 @@
             </td>
           </tr>
         </tbody>
+        <div *ngIf="data_table_module.length === 0">
+          <p>No hay modulos registrado para este usuario</p>
+        </div>
       </table>
     </div>
   </div>
