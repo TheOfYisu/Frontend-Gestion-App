@@ -124,11 +124,8 @@ export class AdminService {
     this.id_user.next(id);
   }
 
-  get_id_user() {
-    let id_user: string = '';
-    this.id_user.subscribe((data) => {
-      id_user = data.toString();
-    });
+  get_id_user(id_user: number) {
+    console.log(id_user);
     return this.httpClient.get(`${this.urlBack}/get_user/${id_user}`);
   }
 

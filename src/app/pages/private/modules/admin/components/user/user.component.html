@@ -316,7 +316,7 @@
     </div>
   </form>
   <div class="tables_user row">
-    <div class="table_list table_modules col-12 col-md-6 col-lg-6">
+    <div class="table_list table_modules col-12 col-lg-6">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Roles del usuario</h2>
         <div class="d-flex" style="margin-right: 15px">
@@ -341,7 +341,7 @@
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="data_table_rol != null">
           <tr *ngFor="let item of data_table_rol">
             <th scope="row">{{ item.id_rol }}</th>
             <td>{{ item.name }}</td>
@@ -359,12 +359,12 @@
             </td>
           </tr>
         </tbody>
-        <div>
+        <tbody *ngIf="data_table_rol === null">
           <p>no hay roles asignado para este usuario</p>
-        </div>
+        </tbody>
       </table>
     </div>
-    <div class="table_list table_modules col-12 col-md-6 col-lg-6">
+    <tbody class="table_list table_modules col-12 col-lg-6">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Modulos del usuario</h2>
         <div class="d-flex" style="margin-right: 15px">
@@ -386,15 +386,18 @@
             <th scope="col">Nombre</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Estado</th>
+            <th scope="col">Rol</th>
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody *ngIf="data_table_module.length > 0">
+        <tbody *ngIf="data_table_module != null">
           <tr *ngFor="let item of data_table_module">
-            <th scope="row">{{ item.id_modules }}</th>
-            <td>{{ item.name }}</td>
+            <th scope="row">{{ item.id_userxrolxmod }}</th>
+            <td>{{ item.module_name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.status ? "Activo" : "Inactivo" }}</td>
+            <td>{{ item.rol_name }}</td>
+
             <td>
               <button
                 type="button"
@@ -407,12 +410,13 @@
             </td>
           </tr>
         </tbody>
-        <div *ngIf="data_table_module.length === 0">
+        <tbody *ngIf="data_table_module === null">
           <p>No hay modulos registrado para este usuario</p>
-        </div>
+        </tbody>
       </table>
-    </div>
+    </tbody>
   </div>
+
   <div class="additional_data"></div>
 </div>
 
@@ -440,7 +444,7 @@
           <input
             type="text"
             id="id"
-            formControlName="id_userxrol"
+            formControlName="id_rolxuser"
             class="form-control"
           />
         </div>

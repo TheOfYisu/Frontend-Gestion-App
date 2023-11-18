@@ -47,7 +47,9 @@ export class UserComponent implements OnInit {
     private modalService: NgbModal,
     private AdminService: AdminService
   ) {
-    this.updatedata();
+    this.AdminService.id_user$.subscribe((data) => {
+      this.updatedata(data);
+    });
   }
 
   ngOnInit(): void {
@@ -83,62 +85,57 @@ export class UserComponent implements OnInit {
 
   create_form_rol() {
     return (this.form_rol = this.FormBuilder.group({
-      id_rol: [{ value: null, disabled: true }, Validators.required],
-      description: [{ value: null, disabled: true }, Validators.required],
+      id_rol: [{ value: null }, Validators.required],
+      description: [{ value: null }, Validators.required],
       status: [null, Validators.required],
     }));
   }
 
   create_form_modules() {
     return (this.form_modules = this.FormBuilder.group({
-      id_rol: [{ value: null, disabled: true }, Validators.required],
-      id_modules: [{ value: null, disabled: true }, Validators.required],
-      description: [{ value: null, disabled: true }, Validators.required],
+      id_rol: [{ value: null }, Validators.required],
+      id_modules: [{ value: null }, Validators.required],
+      description: [{ value: null }, Validators.required],
       status: [null, Validators.required],
     }));
   }
 
   //Carge de datos del usuario
-  updatedata() {
-    this.AdminService.get_id_user().subscribe((data: any) => {
-      this.form_data.setValue(data);
-      if (data.photo === '' || data.photo === null) {
-        data.photo = environment.photo_user;
-      }
+  updatedata(data_id: number) {
+    this.AdminService.get_id_user(data_id).subscribe(
+      (data: any) => {
+        console.log(data_id, data);
+        this.form_data.setValue(data);
+        if (data.photo === '' || data.photo === null) {
+          data.photo = environment.photo_user;
+        }
 
-      data.dob = this.convert_DateString_DateObjet(data.dob);
-      data.entry_date = this.convert_DateString_DateObjet(data.entry_date);
+        data.dob = this.convert_DateString_DateObjet(data.dob);
+        data.entry_date = this.convert_DateString_DateObjet(data.entry_date);
 
-      const exit_date = data.exit_date;
+        const exit_date = data.exit_date;
 
-      if (exit_date !== null) {
-        data.exit_date = this.convert_DateString_DateObjet(data.exit_date);
-      } else {
-        data.exit_date = this.convert_DateString_DateObjet('0000-00-00');
-      }
+        if (exit_date !== null) {
+          data.exit_date = this.convert_DateString_DateObjet(data.exit_date);
+        } else {
+          data.exit_date = this.convert_DateString_DateObjet('0000-00-00');
+        }
 
-      data.weekly_hours = this.convertirhora(data.weekly_hours);
-      this.form_data.setValue(data);
-      this.form_data_copy = data;
-      this.form_data.disable();
+        data.weekly_hours = this.convertirhora(data.weekly_hours);
+        this.form_data.setValue(data);
+        this.form_data_copy = data;
+        this.form_data.disable();
 
-      console.log('modules', this.data_table_module);
-      console.log('rol', this.data_table_rol);
-    });
-    this.AdminService.get_userxrol_user(
-      this.form_data.get('id_users')?.value
-    ).subscribe((data) => {
-      this.data_table_rol = data;
-    });
-    const modulesObservable = this.AdminService.get_user_modules(
-      this.form_data.get('id_users')?.value
-    );
+        this.AdminService.get_userxrol_user(data.id_users).subscribe((data) => {
+          this.data_table_rol = data;
+        });
 
-    forkJoin([rolesObservable, modulesObservable]).subscribe(
-      ([rolesData, modulesData]) => {
-        console.log(rolesData);
-        console.log(modulesData);
-        this.data_table_module = modulesData;
+        this.AdminService.get_user_modules(data.id_users).subscribe((data) => {
+          this.data_table_module = data;
+        });
+      },
+      (error) => {
+        alert(error.detail);
       }
     );
   }
@@ -146,11 +143,9 @@ export class UserComponent implements OnInit {
   //Cargar los datos de las listas al momento de agregar.
   uploade_listable() {
     this.AdminService.get_listable('rol').subscribe((data) => {
-      console.log('roles', data);
       this.list_rol = data;
     });
     this.AdminService.get_listable('modules').subscribe((data) => {
-      console.log('modulos', data);
       this.list_modules = data;
     });
   }
@@ -160,10 +155,6 @@ export class UserComponent implements OnInit {
     this.form_rol.get('id_rol')?.enable();
     this.form_rol.updateValueAndValidity();
     if (table === 'rol') {
-      if (this.id_table) {
-        this.form_rol.removeControl(this.id_table);
-        this.form_rol.reset();
-      }
     } else if (table === 'modules') {
       this.form_modules.get('id_modules')?.enable();
       this.form_modules.get('id_rol')?.enable();
@@ -176,36 +167,63 @@ export class UserComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  update_listable(item: any, table: string, content: any) {
-    console.log(item);
-    delete item.name;
+  async update_listable(item: any, table: string, content: any) {
     this.edit_tables = true;
     if (table === 'rol') {
-      this.id_table = 'id_userxrol';
-      if (!this.form_rol.get('id_rol')) {
+      const datauser = {
+        id_rolxuser: item.id_rolxuser,
+        id_rol: item.id_rol,
+        description: item.description,
+        status: item.status,
+      };
+      this.id_table = 'id_rolxuser';
+      if (this.form_rol.get(this.id_table)) {
         this.form_rol.removeControl(this.id_table);
         this.form_rol.updateValueAndValidity();
       }
-      const newControlName = this.id_table;
       this.form_rol.addControl(
-        newControlName,
-        this.FormBuilder.control({ value: null, disabled: true })
+        this.id_table,
+        this.FormBuilder.control([
+          { value: null, disabled: true },
+          Validators.required,
+        ])
       );
-      this.form_rol.reset();
-      this.form_rol.setValue(item);
-    } else if (table === 'modules') {
+      this.form_rol.updateValueAndValidity();
+      this.form_rol.setValue(datauser);
+      const list_campos = ['id_rolxuser', 'id_rol', 'description'];
+      for (let item of list_campos) {
+        this.desactivarCampo(this.form_rol, item);
+      }
+    }
+    if (table === 'modules') {
+      const datauser = {
+        id_userxrolxmod: item.id_userxrolxmod,
+        id_rol: item.id_rol,
+        id_modules: item.id_module,
+        description: item.description,
+        status: item.status,
+      };
       this.id_table = 'id_userxrolxmod';
-      if (!this.form_modules.get('id_rol')) {
+      if (this.form_modules.get(this.id_table)) {
         this.form_modules.removeControl(this.id_table);
         this.form_modules.updateValueAndValidity();
       }
-      const newControlName = this.id_table;
       this.form_modules.addControl(
-        newControlName,
-        this.FormBuilder.control({ value: null, disabled: true })
+        this.id_table,
+        this.FormBuilder.control([{ value: null }, Validators.required])
       );
-      this.form_modules.reset();
-      this.form_modules.setValue(item);
+      this.form_modules.updateValueAndValidity();
+      this.form_modules.setValue(datauser);
+      const list_campos = [
+        'id_rolxuser',
+        'id_rol',
+        'id_modules',
+        'description',
+        'id_userxrolxmod',
+      ];
+      for (let item of list_campos) {
+        this.desactivarCampo(this.form_modules, item);
+      }
     }
 
     this.modalService.open(content);
@@ -293,7 +311,6 @@ export class UserComponent implements OnInit {
       const horas = parseInt(partesTiempo[0], 10);
       return horas;
     } else {
-      console.log('El formato de tiempo no es válido');
       return '';
     }
   }
@@ -304,11 +321,16 @@ export class UserComponent implements OnInit {
     month: number;
     day: number;
   } {
-    console.log(dateString);
     const fechaPartes = dateString.split('-');
     const year = parseInt(fechaPartes[0], 10);
     const month = parseInt(fechaPartes[1], 10);
     const day = parseInt(fechaPartes[2], 10);
     return { year, month, day };
+  }
+
+  desactivarCampo(formulario: FormGroup, nombreCampo: string) {
+    if (formulario.get(nombreCampo)) {
+      formulario.get(nombreCampo)?.disable();
+    }
   }
 }
