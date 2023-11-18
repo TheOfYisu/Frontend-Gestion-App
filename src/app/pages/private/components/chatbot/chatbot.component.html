@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <h2 class="text-center">Chatbot</h2>
+    <div class="chat-box">
+      <div *ngFor="let item of list_chat" class="{{item.class_style}}">
+        <p>{{item.user}}: {{item.message}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="input-container">
+    <input type="text" class="form-control" placeholder="Escribe tu mensaje..." [(ngModel)]="mensaje">
+    <button class="btn btn-primary" (click)="enviarMensaje()">Enviar</button>
+  </div>
+  

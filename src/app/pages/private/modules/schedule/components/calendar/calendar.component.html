@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-between header-conter">
+  <h1>Calendario</h1>
+  <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center select">
+      <label for="month">Mes:</label>
+      <select
+        id="month"
+        class="form-select"
+        [(ngModel)]="selectedMonth"
+        (change)="onMonthChange()"
+      >
+        <option *ngFor="let month of months" [value]="month">
+          {{ month }}
+        </option>
+      </select>
+    </div>
+    <div class="d-flex align-items-center select">
+      <label for="year">Año:</label>
+      <select
+        id="year"
+        class="form-select"
+        [(ngModel)]="selectedYear"
+        (change)="onYearChange()"
+      >
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center select">
+      <button
+        type="button"
+        class="btn btn-warning"
+        style="margin-right: 3%; white-space: nowrap"
+        (click)="reset_date()"
+      >
+        <i class="bi bi-repeat" style="margin-right: 10px"></i>
+        Restablecer fecha
+      </button>
+    </div>
+    <div
+      class="d-flex align-items-center select"
+      *ngIf="name_rol === 'agente' || name_rol === 'administrador'"
+    >
+      <button
+        type="button"
+        class="btn btn-primary"
+        style="margin-right: 3%; white-space: nowrap"
+      >
+        <i class="bi bi-calendar-plus" style="margin-right: 10px"></i>
+        Solicitar Permiso/Cambio Horario
+      </button>
+    </div>
+  </div>
+</div>
+<div class="table-schedule">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let day of days">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of weeks">
+        <td *ngFor="let day of week" (click)="selectDate(day)">
+          <div [ngClass]="{ selected: isDateSelected(day) }">
+            {{ day !== 0 ? day : "" }}
+          </div>
+          <div class="event-indicator has-event" *ngIf="hasEvent(day)">
+            Solicitudes
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

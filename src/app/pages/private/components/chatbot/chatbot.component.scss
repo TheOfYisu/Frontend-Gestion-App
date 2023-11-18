@@ -1,0 +1,46 @@
+/* chat.component.css */
+
+.container-fluid {
+    height: 77vh; /* Esto hará que el chat ocupe toda la altura de la página */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .chat-box {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+    max-height: 60vh; /* Limita la altura del chat para mantener el área de entrada visible */
+    overflow-y: auto;
+  }
+  
+  .message.sent {
+    background-color: #007bff; /* Color para mensajes enviados */
+    color: #fff;
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  
+  .message.received {
+    background-color: #e0e0e0; /* Color para mensajes recibidos */
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .input-container input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  

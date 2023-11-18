@@ -1,0 +1,172 @@
+<div style="margin-right: 15%">
+  <h1>Horarios</h1>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="mb-3" style="flex: 1">
+    <label for="dateInput">Seleccione una fecha:</label>
+    <input
+      type="date"
+      id="dateInput"
+      class="form-control"
+      [(ngModel)]="selectedDate"
+      style="margin-left: 10px; margin-right: 15px"
+    />
+  </div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="white-space: nowrap"
+      (click)="onDateChange()"
+    >
+      <i class="bi bi-search" style="margin-right: 10px"></i>Buscar horario
+    </button>
+  </div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="white-space: nowrap"
+      (click)="open_modal_generate()"
+    >
+      <i class="bi bi-calendar-plus" style="margin-right: 10px"></i>Generar
+      horario
+    </button>
+  </div>
+  <div class="d-flex align-items-center" style="margin-left: 2%">
+    <div class="dropdown">
+      <button
+        class="btn btn-success dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="bi bi-calendar2-range" style="margin-right: 10px"></i>
+        Descargar
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" (click)="get_horario()">Todo el horario</a>
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            >Rango de dias</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="report_day()">Dia de horario</a>
+        </li>
+        <li><a class="dropdown-item">Horario por cargos</a></li>
+        <li><a class="dropdown-item">Horarios de usuarios inactivos</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 table-users">
+  <div *ngIf="rowData && rowData.length > 0">
+    <ag-grid-angular
+      style="width: 100%; height: 500px"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [gridOptions]="gridOptions"
+      (gridReady)="onRowDoubleClicked($event)"
+    >
+    </ag-grid-angular>
+  </div>
+
+  <div class="no-schedules-message" *ngIf="rowData.length == 0">
+    <span>No hay registros dentro del rango de fechas.</span>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group date-picker-container">
+          <label class="form-label" for="personalSelect"
+            >Rango de dias horario:</label
+          >
+          <div class="dp-hidden position-absolute">
+            <div class="input-group">
+              <input
+                name="datepicker"
+                class="form-control"
+                ngbDatepicker
+                #datepicker="ngbDatepicker"
+                [autoClose]="'outside'"
+                (dateSelect)="onDateSelection($event)"
+                [displayMonths]="1"
+                [dayTemplate]="dateTemplate"
+                outsideDays="hidden"
+                [startDate]="fromDate!"
+                tabindex="-1"
+              />
+              <ng-template #dateTemplate let-date let-focused="focused">
+                <span
+                  class="custom-day"
+                  [class.focused]="focused"
+                  [class.range]="isRange(date)"
+                  [class.faded]="isHovered(date) || isInside(date)"
+                  (mouseenter)="hoveredDate = date"
+                  (mouseleave)="hoveredDate = null"
+                >
+                  {{ date.day }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="input-group">
+            <input
+              #dpDateRange
+              class="form-control"
+              placeholder="yyyy-mm-dd - yyyy-mm-dd"
+              name="dpDateRange"
+              [value]="
+                formatter.format(fromDate) + '  /  ' + formatter.format(toDate)
+              "
+              (click)="datepicker.toggle()"
+            />
+            <button
+              class="btn btn-outline-secondary bi bi-calendar3"
+              (click)="datepicker.toggle()"
+              type="button"
+            ></button>
+            <button
+              class="btn btn-outline-primary"
+              type="button"
+              (click)="search_date()"
+            >
+              <i class="bi bi-search" style="margin-right: 10px"></i>Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

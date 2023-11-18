@@ -1,0 +1,90 @@
+<div class="container-1">
+  <div class="row container-row">
+    <div class="col-12 col-lg-6 col-md-6 info-map d-flex align-items-center">
+      <div>
+        <div class="title-map">¡Estamos Aquí para Ayudarte!</div>
+        <div class="text-map">
+          ¿Tienes preguntas o sugerencias? Nos encantaría escucharte. Nuestro
+          equipo de soporte está listo para brindarte la asistencia que
+          necesitas. No dudes en ponerte en contacto con nosotros para obtener
+          más información sobre cómo nuestro sistema de gestión de horarios
+          laborales puede beneficiar a tu empresa. Esperamos colaborar contigo.
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-md-6 container-1-img">
+      <img
+        src="./assets/img/public/contact-img-1.png"
+        class="img-fluid"
+        alt="Image"
+      />
+    </div>
+  </div>
+
+  <div class="row my-5 container-social">
+    <div class="col-12 col-lg-3 redes-social box-social">
+      <p class="social-title">Follow us</p>
+      <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook icon-redes"></i></a>
+        <a href="#"><i class="bi bi-instagram icon-redes"></i></a>
+        <a href="#"><i class="bi bi-twitter icon-redes"></i></a>
+      </div>
+    </div>
+    <div class="col-12 col-lg-3 number-social box-social">
+      <a href="#"><i class="bi bi-telephone-forward"></i></a>
+      +94 4444 5555
+    </div>
+    <div class="col-12 col-lg-6 gps-social box-social">
+      <a href="#"><i class="bi bi-map"></i></a>
+      but also the leap into electronic typesetting
+    </div>
+  </div>
+</div>
+<div class="container-2">
+  <div class="row">
+    <form [formGroup]="FormContact" class="col-12 col-lg-6 form-contact">
+      <div class="row">
+        <div class="col-6 form-outline">
+          <label class="form-label">Nombre</label>
+          <input type="text" formControlName="firstname" class="form-control" />
+        </div>
+        <div class="col-6 form-outline">
+          <label class="form-label">Apellido</label>
+          <input type="text" formControlName="lastname" class="form-control" />
+        </div>
+      </div>
+      <div class="form-outline mt-3">
+        <label class="form-label">Correo</label>
+        <input type="email" formControlName="email" class="form-control" />
+      </div>
+      <div class="form-outline mt-3">
+        <label class="form-label">Mensaje</label>
+        <textarea
+          formControlName="message"
+          class="form-control form-text"
+          id="exampleFormControlTextarea1"
+        ></textarea>
+      </div>
+      <div class="pt-1 div-button">
+        <button
+          class="btn button-login"
+          type="button"
+          (click)="SendDataFormContact()"
+          [disabled]="!ValidFormContact"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+    <div class="col-12 col-lg-6">
+      <iframe
+        class="map-location"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9318.160461301904!2d-74.77783858479815!3d10.902505641306988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef5cd8731ec61e9%3A0x44f865fb13e2ad0f!2sCra.%2011%20%2339-36%2C%20Soledad%2C%20Atl%C3%A1ntico!5e0!3m2!1ses-419!2sco!4v1681265630278!5m2!1ses-419!2sco"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+</div>

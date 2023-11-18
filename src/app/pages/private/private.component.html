@@ -1,0 +1,27 @@
+<div class="isLoading" *ngIf="!isLoading">
+  <div class="text-center">
+    <div class="spinner-border">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Cargando...</p>
+  </div>
+</div>
+
+<div class="main-content" *ngIf="isLoading">
+  <div class="navbar">
+    <app-navbar></app-navbar>
+  </div>
+  <div [ngClass]="{ OnSideNav: !sidebarVisible, OffSideNav: sidebarVisible }">
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar" [hidden]="sidebarVisible">
+      <app-sidenav></app-sidenav>
+    </aside>
+    <!-- ===== End Sidebar ===== -->
+
+    <!-- ======== Main ======== -->
+    <main id="main" class="main">
+      <router-outlet></router-outlet>
+    </main>
+    <!-- ====== End Main ====== -->
+  </div>
+</div>

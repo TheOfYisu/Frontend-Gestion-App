@@ -1,0 +1,134 @@
+.container-1 {
+  background-color: #e8f4fa;
+  width: 100%;
+  border-top: 2px solid #d2d2d2;
+  border-bottom: 2px solid #d2d2d2;
+
+  .container-row {
+    padding: 5% 8% 0 8%;
+  }
+
+  .info-map {
+    padding: 0 6%;
+
+    .title-map {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 45px;
+      line-height: 170%;
+      color: #000000;
+    }
+
+    .text-map {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 189.5%;
+      color: #777777;
+    }
+    .container-1-img {
+      padding-top: 10%;
+    }
+  }
+
+  .container-social {
+    text-align: center;
+    display: flex;
+    padding: 0 5%;
+
+    .redes-social {
+      .social-title {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 189.5%;
+        color: #000000;
+        margin-left: 3%;
+      }
+
+      .icon-redes {
+        font-size: 25px;
+        color: black;
+        margin-right: 3%;
+        margin-left: 3%;
+        padding: 5px 10px 6px 10px;
+        border-radius: 100%;
+        box-shadow: 3px 2px 20px #222222;
+      }
+    }
+
+    .number-social {
+      margin-top: 25px;
+      font-style: normal;
+      font-weight: 350;
+      font-size: 25px;
+      color: #333333;
+
+      .bi-telephone-forward {
+        font-size: 30px;
+        color: #000000;
+        margin-right: 5%;
+      }
+    }
+
+    .gps-social {
+      margin-top: 25px;
+      font-style: normal;
+      font-weight: 350;
+      font-size: 25px;
+      color: #333333;
+
+      .bi-map {
+        font-size: 30px;
+        color: #000000;
+        margin-right: 5%;
+      }
+    }
+  }
+}
+
+.container-2 {
+  .form-contact {
+    padding: 5% 6% 0% 6%;
+
+    .form-control {
+      height: 50px;
+      border-radius: 5px;
+    }
+
+    .form-label {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 175.4%;
+      letter-spacing: -0.3px;
+      color: #4f4f4f;
+    }
+
+    .form-control-complete {
+      width: 100%;
+    }
+
+    .form-text {
+      height: 200px;
+    }
+
+    .button-login {
+      margin-top: 5%;
+      background-color: #1090cb;
+      border: none;
+      padding: 7px 40px 7px 40px;
+      color: #ffffff;
+      border-radius: 8px;
+      font-style: normal;
+      font-weight: 450;
+      font-size: 15px;
+    }
+  }
+  .map-location {
+    border-radius: 65px;
+    height: 100%;
+    width: 100%;
+    padding: 7%;
+  }
+}
